@@ -1,0 +1,64 @@
+/* Addform.css */
+
+.add-food-form {
+    max-width: 600px; /* Max width of the form */
+    margin: 20px auto; /* Center the form horizontally */
+    padding: 20px; /* Add padding around the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #ffffff; /* White background for the form */
+}
+
+.form-title {
+    text-align: center; /* Center the title */
+    color: #333; /* Dark color for text */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.food-form {
+    display: flex; /* Flex layout for the form */
+    flex-direction: column; /* Arrange items vertically */
+}
+
+.food-item {
+    display: flex; /* Use flexbox for input fields */
+    justify-content: space-between; /* Space inputs evenly */
+    margin-bottom: 15px; /* Space between food items */
+}
+
+.food-input, .quantity-input {
+    flex: 1; /* Allow inputs to grow */
+    margin-right: 10px; /* Space between inputs */
+    padding: 10px; /* Inner padding */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size for inputs */
+}
+
+.food-input:last-child, .quantity-input:last-child {
+    margin-right: 0; /* Remove margin from the last input */
+}
+
+.add-food-button, .submit-button {
+    padding: 10px 15px; /* Button padding */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #28a745; /* Green background for buttons */
+    color: white; /* White text */
+    font-size: 16px; /* Font size for buttons */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+    margin-top: 10px; /* Space above buttons */
+}
+
+.add-food-button {
+    background-color: #007bff; /* Blue background for Add More Food */
+}
+
+.add-food-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.submit-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}

@@ -1,0 +1,77 @@
+/* Container for the entire history section */
+.history-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Main title styling */
+.history-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Each date section has spacing between them */
+.date-section {
+    margin-bottom: 30px;
+}
+
+/* Date header */
+.date-section h3 {
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 1.2em;
+}
+
+/* Container to display meal cards side-by-side */
+.meal-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Individual meal card styling */
+.meal-card {
+    flex: 1; /* Make the cards flexible */
+    min-width: 200px; /* Minimum width to ensure it doesn't get too narrow */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-align: left;
+    background-color: white; /* Ensures a clean background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add a light shadow for depth */
+}
+
+/* Heading of each meal type */
+.meal-type {
+    font-size: 1em;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: center;
+}
+
+/* Remove bullet points from list and ensure items fit in a single line */
+.meal-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.meal-card li {
+    display: flex;
+    justify-content: space-between; /* Aligns items in the list */
+    padding: 4px 0;
+    font-size: 0.9em;
+    color: #555;
+    white-space: nowrap; /* Prevents wrapping of text within the list items */
+    overflow: hidden; /* Ensures that overflowing text is hidden */
+    text-overflow: ellipsis; /* Adds ellipsis if text is too long */
+}
+
+/* Bold labels within each item */
+.food-name,
+.quantity {
+    font-weight: bold;
+}
