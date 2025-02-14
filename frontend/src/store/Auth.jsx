@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
         setToken("");  // Clear the token state
         localStorage.removeItem('token');
         localStorage.removeItem('userType'); 
+        localStorage.removeItem('username');
         setuserType("");
        // Remove token from localStorage
     };

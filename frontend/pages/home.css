@@ -1,83 +1,194 @@
-/* home.css */
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 
+body {
+  background: #f4f4f9;
+  color: #333;
+}
+
+/* Home Container */
 .home-container {
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(to bottom right, #2b7a78, #3aafa9);
-    color: #fff;
-    min-height: 100vh;
-  }
-  
+  text-align: center;
+  padding: 50px 20px;
+  background: linear-gradient(to bottom right, #f0f4f8, #e6e9ef);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hero Section */
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1200px;
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero-text {
+  text-align: left;
+  max-width: 50%;
+}
+
+.hero-image {
+  width: 45%;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.home-title {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.home-description {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 15px 0;
+}
+
+/* Buttons Section */
+.home-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.home-login, .home-signup {
+  padding: 12px 25px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.home-login {
+  background: #6a89cc; /* Soft blue */
+  color: white;
+}
+
+.home-signup {
+  background: #82ccdd; /* Light teal */
+  color: white;
+}
+
+.home-login:hover {
+  background: #4a69bd; /* Darker blue */
+  transform: translateY(-3px);
+}
+
+.home-signup:hover {
+  background: #60a3bc; /* Darker teal */
+  transform: translateY(-3px);
+}
+
+/* Features Section */
+.home-content {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.home-card {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.home-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #6a89cc; /* Soft blue */
+}
+
+.home-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #82ccdd; /* Light teal */
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
   .home-header {
-    animation: fadeIn 2s ease-in-out;
-    margin-bottom: 30px;
+    flex-direction: column;
+    text-align: center;
+    padding: 30px;
   }
-  
-  @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(-20px); }
-    100% { opacity: 1; transform: translateY(0); }
+
+  .hero-text {
+    max-width: 100%;
   }
-  
-  .home-title {
-    font-size: 2.5em;
-    margin-bottom: 10px;
+
+  .hero-image {
+    width: 80%;
+    margin-top: 20px;
   }
-  
-  .home-description {
-    font-size: 1.2em;
-    font-weight: 300;
-  }
-  
-  .home-content {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0;
-  }
-  
-  .home-card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 300px;
-    transition: transform 0.3s ease;
-  }
-  
-  .home-card:hover {
-    transform: scale(1.05);
-    background: rgba(255, 255, 255, 0.2);
-  }
-  
+
   .home-buttons {
-    margin-top: 30px;
-    display: flex;
-    gap: 15px;
+    justify-content: center;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .home-title {
+    font-size: 2.2rem;
+  }
+
+  .home-description {
+    font-size: 1rem;
+  }
+
+  .home-buttons {
+    flex-direction: column;
+  }
+
   .home-login, .home-signup {
-    padding: 10px 20px;
-    font-size: 1em;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+    width: 100%;
   }
-  
-  .home-login {
-    background-color: #f4a261;
+
+  .home-content {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .home-signup {
-    background-color: #3aafa9;
+
+  .home-card {
+    width: 100%;
+    max-width: 350px;
   }
-  
-  .home-login:hover {
-    background-color: #e76f51;
-    transform: translateY(-3px);
-  }
-  
-  .home-signup:hover {
-    background-color: #2b7a78;
-    transform: translateY(-3px);
-  }
-  
+}

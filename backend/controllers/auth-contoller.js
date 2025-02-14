@@ -17,82 +17,88 @@ const home = async (req, res) => {
 // Register Route
 const register = async (req, res) => {
   try {
-    // Destructure the required fields from the request body
     const { userType, username, email, phone, address, password } = req.body;
 
-    // Check if a user already exists with the provided email
-    const userExist = await User.findOne({ username }); // Query the database for a user with this email
+    // Check if user already exists
+    const userExist = await User.findOne({ email }); 
     if (userExist) {
-      console.log("User already exists with this email"); // Log the error for debugging
-      alert(`User ${username} already exists`); //
-      return res.status(400).json({ msg: "User already exists" }); // Return a 400 status indicating the user already exists
+      console.log(`User with email ${email} already exists`);
+      return res.status(400).json({ msg: "User already exists" });
     }
 
-    // Hash the user's password for security
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password with a salt round of 10
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user in the database
+    // Create user in DB
     const user = await User.create({
       userType,
       username,
       email,
       phone,
       address,
-      password: hashedPassword, // Store the hashed password
+      password: hashedPassword,
     });
 
-    // Create a JWT token for the new user
-   const token =jwt.sign({
-    
-   })
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, userType: user.userType },
+      process.env.JWT_SECRET || 'your_secret_key', // Use environment variable for security
+      { expiresIn: '1h' }
+    );
 
-    user.token = token; // Assign the generated token to the user object
-    user.password = undefined; // Ensure the password field is not sent in the response for security
+    console.log("User registered successfully");
 
-    // Log the registration process for debugging
-    console.log("registered"); 
-    // Send success response
+    return res.status(201).json({
+      msg: "User registered successfully",
+      token: token,
+      userId: user._id.toString(),
+    });
 
-    return res.status(201).json({ msg: "User registered successfully", token:await user.genrateToken(),userId:user._id.toString()}); // Return a 201 status indicating successful registration
   } catch (error) {
-    // If an error occurs, send a 500 status with the error message
-    return res.status(500).send({ message: error.message }); // Log the error message for debugging
+    console.error("Error during registration:", error);
+    return res.status(500).json({ message: error.message });
   }
 };
 
 // Login Route
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const userExist = await User.findOne({ username });
-    
+    const {username, email, password } = req.body; // Use email instead of username
+    const userExist = await User.findOne({ email });
+    console.log(req.body);
+
     if (!userExist) {
-      return res.status(401).json({ msg: 'User does not exist' });
+      return res.status(401).json({ msg: "User does not exist" });
     }
 
+    // Check password
     const isPasswordCorrect = await bcrypt.compare(password, userExist.password);
     if (!isPasswordCorrect) {
-      return res.status(401).json({ msg: 'Invalid password' });
+      return res.status(401).json({ msg: "Invalid password" });
     }
 
-    // Generate a JWT token with a hardcoded secret key
+    // Generate JWT Token
     const token = jwt.sign(
-      { userId: userExist._id, userType: userExist.userType }, // Payload
-      'your_secret_key', // Replace 'your_secret_key' with an actual key for development
-      { expiresIn: '1h' } // Optional: set token expiration
+      { userId: userExist._id, userType: userExist.userType },
+      process.env.JWT_SECRET || 'your_secret_key', 
+      { expiresIn: '1h' }
     );
 
-    console.log("UserType:", userExist.userType);
+    console.log("Login successful");
+
     return res.status(200).json({
-      msg: 'Login successful',
+      msg: "Login successful",
       userType: userExist.userType,
-      token: token, // Include token in response
+      token: token, 
+      username:userExist.username
+      
     });
+
   } catch (error) {
-    return res.status(500).send({ message: error.message });
+    console.error("Error during login:", error);
+    return res.status(500).json({ message: error.message });
   }
 };
-
 
 // Institutes Route
 const institutes = async (req, res) => {

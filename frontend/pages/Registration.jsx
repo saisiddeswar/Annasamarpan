@@ -46,7 +46,7 @@ const Registration = () => {
         });
         const responseData = await response.json();
            storeToken(responseData.token); 
-        navigate('/login')
+           setTimeout(() => navigate('/login'), 2000);
         
       } else {
         console.log('Registration failed:', response);
