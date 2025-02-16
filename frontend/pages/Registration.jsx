@@ -1,58 +1,53 @@
-import { useState } from 'react';
-import { useNavigate,} from 'react-router-dom'; 
-import { useContext } from 'react';
-import './signup.css';
+import { useReducer, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../src/store/Auth';
+import './signup.css';
+
+const initialState = {
+  userType: 'NGO',
+  username: '',
+  email: '',
+  phone: '',
+  address: { street: '', city: '', state: '', zip: '' },
+  password: '',
+};
+
+const reducer = (state, action) => {
+  if (action.name === 'address') {
+    return { ...state, address: { ...state.address, [action.field]: action.value } };
+  }
+  return { ...state, [action.name]: action.value };
+};
 
 const Registration = () => {
-  const navigate=useNavigate();
-  const [user, setUser] = useState({
-    userType: 'NGO', // Default user type
-    username: '',
-    email: '',
-    phone: '',
-    password: '',
-    address: {
-      street: '',
-      city: '',
-      state: '',
-      zip: ''
-    }
-  });
+  const navigate = useNavigate();
   const { storeToken } = useContext(AuthContext);
-
+  const [user, dispatch] = useReducer(reducer, initialState);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await fetch(`http://localhost:5000/api/auth/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user),
       });
 
-      if (response.ok) {
-        alert('Registration Successful');
-        setUser({
-          userType: 'NGO',
-          username: '',
-          email: '',
-          phone: '',
-          password: '',
-          address: { street: '', city: '', state: '', zip: '' }
-          
-        });
-        const responseData = await response.json();
-           storeToken(responseData.token); 
-           setTimeout(() => navigate('/login'), 2000);
-        
-      } else {
-        console.log('Registration failed:', response);
+      if (!response.ok) {
+        const errorMsg = await response.json();
+        alert(`Error: ${errorMsg.msg || 'Registration failed'}`);
+        return;
       }
+
+      const responseData = await response.json();
+      alert('Registration Successful');
+      storeToken(responseData.token);
+      setTimeout(() => navigate('/login'), 2000);
+
     } catch (error) {
-      console.log('Error:', error);
+      console.error('Error:', error);
+      alert('Something went wrong. Try again later.');
     }
   };
 
@@ -63,131 +58,37 @@ const Registration = () => {
           <h1 className="heading">Registration</h1>
 
           <form className="user-form" onSubmit={handleSubmit}>
-            
-            {/* User Type Selection */}
-            <div className="form-group">
-              <label htmlFor="userType">User Type</label>
-              <select
-                id="userType"
-                name="userType"
-                value={user.userType}
-                onChange={(e) => setUser({ ...user, userType: e.target.value })}
-                required
-              >
-                <option value="NGO">NGO</option>
-                <option value="Institute">Institute</option>
-              </select>
-            </div>
-
-            {/* Username */}
-            <div className="form-group">
-              <label htmlFor="username">Organisation Name</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={user.username}
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
-                required
-              />
-            </div>
-
-            {/* Email */}
-            <div className="form-group">
-              <label htmlFor="email">Organisation Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                required
-              />
-            </div>
-
-            {/* Phone */}
-            <div className="form-group">
-              <label htmlFor="phone">Phone</label>
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={user.phone}
-                onChange={(e) => setUser({ ...user, phone: e.target.value })}
-                required
-              />
-            </div>
+            {/* User Type, Username, Email, Phone */}
+            {['userType', 'username', 'email', 'phone'].map((field) => (
+              <div key={field} className="form-group">
+                <label htmlFor={field}>{field === 'userType' ? 'User Type' : field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                {field === 'userType' ? (
+                  <select id={field} name={field} value={user[field]} onChange={(e) => dispatch(e.target)}>
+                    <option value="NGO">NGO</option>
+                    <option value="Institute">Institute</option>
+                  </select>
+                ) : (
+                  <input type="text" id={field} name={field} value={user[field]} onChange={(e) => dispatch(e.target)} required />
+                )}
+              </div>
+            ))}
 
             {/* Address Fields */}
-            <div className="form-group">
-              <label htmlFor="street">Street</label>
-              <input
-                type="text"
-                id="street"
-                name="street"
-                value={user.address.street}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    address: { ...user.address, street: e.target.value }
-                  })
-                }
-                required
-              />
-            </div>
+            {['street', 'city', 'state', 'zip'].map((field) => (
+              <div key={field} className="form-group">
+                <label htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                <input
+                  type="text"
+                  id={field}
+                  name={field}
+                  value={user.address[field]}
+                  onChange={(e) => dispatch({ name: 'address', field, value: e.target.value })}
+                  required
+                />
+              </div>
+            ))}
 
-            <div className="form-group">
-              <label htmlFor="city">City</label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={user.address.city}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    address: { ...user.address, city: e.target.value }
-                  })
-                }
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="state">State</label>
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={user.address.state}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    address: { ...user.address, state: e.target.value }
-                  })
-                }
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="zip">Zip</label>
-              <input
-                type="text"
-                id="zip"
-                name="zip"
-                value={user.address.zip}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    address: { ...user.address, zip: e.target.value }
-                  })
-                }
-                required
-              />
-            </div>
-
-            {/* Password */}
+            {/* Password Field (Moved Below Address) */}
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
@@ -195,9 +96,7 @@ const Registration = () => {
                 id="password"
                 name="password"
                 value={user.password}
-                onChange={(e) =>
-                  setUser({ ...user, password: e.target.value })
-                }
+                onChange={(e) => dispatch(e.target)}
                 required
               />
             </div>

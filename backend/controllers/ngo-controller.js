@@ -29,7 +29,7 @@ const Foodlistings=async(req,res)=>{
             availableFood
         }); 
     } catch (error) {
-        console.log("mooda gudda gone wrong",error)
+        console.log("wrong",error)
         
     }
 

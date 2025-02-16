@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import './home.css';
-import foodShareImage from '../public/'; // Example image
+import foodShareImage from '/foodimage.jpg'; // Example image
 
 const Home = () => {
   const navigate = useNavigate();
