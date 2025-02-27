@@ -6,7 +6,7 @@
 * [![Express.js][Express.js]][Express-url]
 * [![MongoDB][MongoDB]][MongoDB-url]
 * [![Bootstrap][Bootstrap]][Bootstrap-url]
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Installation & Setup
 
 ### Prerequisites
@@ -43,7 +43,7 @@ npm install
 npm run dev
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Features
 - Two types of users: **NGOs** and **Institutes**
 - **Signup & Login**:
@@ -57,10 +57,11 @@ npm run dev
   - NGOs and Institutes can contact each other upon a successful booking.
 - **Daily Food Display**:
   - Food availability is refreshed daily.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Contribution
 This project is developed solely by **Sai Siddeswar** without using any open-source contributions.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+##
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
