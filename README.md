@@ -71,20 +71,12 @@ npm run dev
 ```
 
 
-## Features
-- Two types of users: **NGOs** and **Institutes**
-- **Signup & Login**:
-  - NGOs and Institutes have separate signup but a common login.
-- **Food Listing**:
-  - Institutes can list surplus food for different meal times (Breakfast, Lunch, and Dinner) to notify NGOs of available food.
-  - Each food listing includes details like the type of food, quantity, and availability time.
-  - NGOs can browse these listings in real time, helping them find and collect food efficiently.
-  - The platform ensures that food availability is updated daily, so NGOs always see the latest information.
-- **Booking & Notifications**:
-  - NGOs can book available food directly through the platform, ensuring a smooth and quick reservation process.
-  - Both parties (Institute & NGO) can communicate directly via the platform to confirm pickup details and avoid miscommunication.
-- **Daily Food Display**:
-  - Food availability is refreshed daily.
+## Next Changes
+- **Direct Communication**: I will implement a messaging system for NGOs and Institutes to interact within the platform.  
+- **Expanded Access**: More Institutes will be able to join and contribute surplus food.  
+- **Enhanced Security**: I will introduce authentication improvements and data protection measures.  
+- **MERN Stack Optimization**: The platform will be built and optimized exclusively using the MERN stack.  
+
 
 ## Contribution
 This project is developed solely by **Sai Siddeswar** without using any open-source contributions.
