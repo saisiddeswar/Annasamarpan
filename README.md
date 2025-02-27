@@ -1,54 +1,77 @@
-AnnaPrasan - Food Donation Platform
-Overview
-AnnaPrasan is a platform designed to facilitate food donations from institutes to NGOs, ensuring that surplus food reaches those in need efficiently. The platform leverages geolocation to match NGOs with nearby institutes based on customizable distance filters.
+# Annasamarpan
 
-Features
-Food Donation Management: Institutes can list available surplus food for donation. NGO Registration & Search: NGOs can register and search for available food donations. Distance-Based Filtering: NGOs can find nearby institutes within a specified radius. Real-Time Updates: Institutes can update available food items dynamically. Secure Authentication: Ensures data security and user authentication. User-Friendly Interface: A seamless experience for both NGOs and institutes.
-Tech Stack
-Frontend: React.js, Next.js, Material UI, Tailwind CSS Backend: Node.js, Express.js Database: MongoDB Authentication: JWT, Firebase Authentication Geolocation Services: Google Maps API for distance-based filtering Hosting & Deployment: Vercel (Frontend), Render (Backend)
-Installation & Setup
-Clone the repository:
-   git clone https://github.com/yourusername/AnnaPrasan.git
-   cd AnnaPrasan
-Install dependencies:
-   npm install
-Set up environment variables (create a .env file and configure API keys, database URL, etc.).
+## Tech Stack
+* [![React][React.js]][React-url]
+* [![Node.js][Node.js]][Node-url]
+* [![Express.js][Express.js]][Express-url]
+* [![MongoDB][MongoDB]][MongoDB-url]
+* [![Bootstrap][Bootstrap]][Bootstrap-url]
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Installation & Setup
 
-Run the development server:
+### Prerequisites
+Ensure you have the following installed:
+* [![Node.js][Node.js]][Node-url]
+* [![MongoDB][MongoDB]][MongoDB-url]
 
-   npm run dev
-Backend setup:
-Navigate to the backend folder: sh cd backend Install dependencies: sh npm install Start the server: sh npm start
-Usage
-For Institutes:
+### Backend Setup
+```sh
+# Clone the repository
+git clone https://github.com/saisiddeswar/Annasamarpan/
+```
+### Backend Setup
+```sh
+cd backend
 
-Register/Login
+# Install dependencies
+npm install
 
-List food items available for donation
+# Create a .env file and configure necessary variables
 
-Update or remove listed items
+# Start the backend server
+npm start
+```
 
-For NGOs:
+### Frontend Setup
+```sh
+cd frontend
 
-Register/Login
+# Install dependencies
+npm install
 
-Search for nearby food donations
+# Start the frontend server
+npm run dev
+```
 
-Adjust search radius to find available food
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Features
+- Two types of users: **NGOs** and **Institutes**
+- **Signup & Login**:
+  - NGOs and Institutes have separate signup but a common login.
+- **Food Listing**:
+  - Institutes can share food availability for **Breakfast, Lunch, and Dinner**.
+  - NGOs can view available food listings.
+- **Booking & Notifications**:
+  - NGOs can book available food.
+  - Institutes receive notifications upon booking.
+  - NGOs and Institutes can contact each other upon a successful booking.
+- **Daily Food Display**:
+  - Food availability is refreshed daily.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Contribution
+This project is developed solely by **Sai Siddeswar** without using any open-source contributions.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Node.js]: https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white
+[Node-url]: https://nodejs.org/
+[Express.js]: https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white
+[Express-url]: https://expressjs.com/
+[MongoDB]: https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white
+[MongoDB-url]: https://www.mongodb.com/
+[Bootstrap]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
 
-Contact institutes for collection
 
-Contribution Guidelines
-Contributions are welcome! To contribute:
 
-Fork the repository. Create a new branch (feature-branch-name). Commit changes and push to your branch. Open a pull request for review.
-License
-This project is licensed under the MIT License.
 
-Contact
-For any inquiries or support, please contact:
-
-Email: siddeswar0605@gmail.com
-GitHub: https://github.com/saisiddeswar/
-LinkedIn:[ yourprofile](https://linkdin/saisiddeswar/)
-🚀 Let's work together to eliminate food waste and support those in need!
