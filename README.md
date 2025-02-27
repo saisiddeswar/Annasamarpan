@@ -1,4 +1,31 @@
+<div align="center">
+
 # Annasamarpan
+
+</div>
+
+
+## Description
+Annasamarpan is a **food donation platform** that connects **Institutes** (such as colleges, hostels, and restaurants) with **NGOs** to facilitate the **efficient donation and distribution of surplus food** to orphans and people in need. The platform ensures that excess food does not go to waste by enabling real-time food availability listings, streamlined bookings, and easy communication between donors and receivers.
+
+## User Flow
+1. **Signup & Login**:
+   - NGOs and Institutes have **separate signup processes** but share a **common login system**.
+   
+2. **Food Listing** (Institutes):
+   - Institutes list available food for **Breakfast, Lunch, and Dinner**.
+   - Food listings are updated **daily**.
+
+3. **Food Browsing & Booking** (NGOs):
+   - NGOs view available food listings.
+   - NGOs book food items based on availability.
+
+4. **Booking Confirmation & Notifications**:
+   - Once an NGO books food, the **Institute receives a notification**.
+   - Upon confirmation, **both parties can communicate** to finalize food pickup.
+
+5. **Daily Food Refresh**:
+   - Food availability **resets daily** to ensure accurate tracking and fair distribution.
 
 ## Tech Stack
 * [![React][React.js]][React-url]
