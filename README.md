@@ -76,12 +76,13 @@ npm run dev
 - **Signup & Login**:
   - NGOs and Institutes have separate signup but a common login.
 - **Food Listing**:
-  - Institutes can share food availability for **Breakfast, Lunch, and Dinner**.
-  - NGOs can view available food listings.
+  - Institutes can list surplus food for different meal times (Breakfast, Lunch, and Dinner) to notify NGOs of available food.
+  - Each food listing includes details like the type of food, quantity, and availability time.
+  - NGOs can browse these listings in real time, helping them find and collect food efficiently.
+  - The platform ensures that food availability is updated daily, so NGOs always see the latest information.
 - **Booking & Notifications**:
-  - NGOs can book available food.
-  - Institutes receive notifications upon booking.
-  - NGOs and Institutes can contact each other upon a successful booking.
+  - NGOs can book available food directly through the platform, ensuring a smooth and quick reservation process.
+  - Both parties (Institute & NGO) can communicate directly via the platform to confirm pickup details and avoid miscommunication.
 - **Daily Food Display**:
   - Food availability is refreshed daily.
 
