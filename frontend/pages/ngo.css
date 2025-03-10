@@ -1,142 +1,54 @@
 /* ngo.css */
+.card {
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-/* Header Styles */
-.ngo-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #2b7a78;
-    color: white;
-  }
-  
-  .ngo-title {
-    font-size: 1.8em;
-  }
-  
-  .ngo-cart-button {
-    font-size: 1.2em;
-    padding: 8px 12px;
-    cursor: pointer;
-    background-color: #def2f1;
-    color: #2b7a78;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  /* Main Container */
-  .ngo-institute-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  /* Institute Card Styles */
-  .ngo-card {
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    width: 300px;
-    text-align: center;
-  }
-  
-  .ngo-institute-name {
-    font-size: 1.6em;
-    color: #2b7a78;
-    margin-bottom: 10px;
-  }
-  
-  /* Meal Section Styles */
-  .ngo-meal-section {
-    margin-top: 15px;
-  }
-  
-  .ngo-meal-type {
-    font-size: 1.4em;
-    color: #3aafa9;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  
-  /* Food Item List */
-  .ngo-food-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 5px 0;
-    padding: 8px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    border: 1px solid #eee;
-  }
-  
-  .ngo-food-name {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .ngo-food-quantity {
-    font-size: 0.9em;
-    color: #555;
-  }
-  
-  /* Button Styles */
-  .ngo-meal-button-container {
-    display: flex;
-    gap: 5px;
-  }
-  
-  .ngo-small-call-button,
-  .ngo-small-book-button {
-    padding: 5px 10px;
-    font-size: 0.9em;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none;
-  }
-  
-  .ngo-small-call-button {
-    background-color: #3aafa9;
-    color: white;
-  }
-  
-  .ngo-small-book-button {
-    background-color: #f76c5e;
-    color: white;
-  }
-  
-  .ngo-small-book-button:disabled {
-    background-color: #ddd;
-    color: #777;
-    cursor: not-allowed;
-  }
-  
-  /* Cart Styles */
-  .ngo-cart-items {
-    margin: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .ngo-cart-item {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 5px;
-    font-size: 1.1em;
-    color: #333;
-  }
-  
-  .ngo-cart-item span {
-    display: block;
-    margin: 2px 0;
-  }
-  
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-md {
+  padding: 8px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.btn-outline-primary {
+  border-color: #00C853;
+  color: #00C853;
+}
+
+.btn-outline-primary:hover {
+  background-color: #00C853;
+  color: #fff;
+}
+
+.btn-success {
+  background-color: #00C853;
+  border-color: #00C853;
+}
+
+.btn-success:hover {
+  background-color: #009c3b;
+  border-color: #009c3b;
+}
+
+.list-group-item {
+  border: none;
+  padding: 10px 0;
+}
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}

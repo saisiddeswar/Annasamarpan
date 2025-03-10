@@ -1,83 +1,46 @@
-/* General Styles */
-.about-container {
-  text-align: center;
-  padding: 50px 20px;
-  background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+/* about.css */
+.about-bg {
+  background: linear-gradient(135deg, #e8f5e9 0%, #fff 100%);
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .about-title {
-  font-size: 2.8rem;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.about-description {
-  font-size: 1.2rem;
-  color: #555;
-  max-width: 800px;
-  margin: 15px auto;
+  font-size: 2.5rem;
+  color: #333;
 }
 
 .about-subtitle {
-  font-size: 2rem;
-  margin-top: 30px;
-  color: #2980b9;
+  font-size: 1.8rem;
+  color: #444;
 }
 
-/* Stats Section */
-.stats-container {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin: 40px 0;
-  flex-wrap: wrap;
+.about-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 700px;
 }
 
-.stat-box {
-  background: white;
+.stat-card {
+  background: #fff;
   border-radius: 15px;
-  padding: 20px;
-  width: 200px;
-  text-align: center;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.stat-box:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+  color: #00C853; /* Default green, overridden by className */
 }
 
 .stat-number {
-  font-size: 2.8rem;
-  font-weight: bold;
-  color: #ff9f1c; /* Warm orange for better contrast */
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  font-size: 2rem;
+  color: #333;
 }
 
-.stat-box p {
+.stat-label {
   font-size: 1rem;
   color: #666;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .about-title {
-    font-size: 2.2rem;
-  }
-
-  .about-description {
-    font-size: 1rem;
-  }
-
-  .stats-container {
-    flex-direction: column;
-    align-items: center;
-  }
 }

@@ -1,34 +1,42 @@
-/* Reset basic styling */
-
+/* Navbar Styling */
 .navbar {
-  background: #f8f9fa !important; /* Bootstrap default light background */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.8); /* Glassmorphism effect */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 12px 0;
+  transition: all 0.3s ease-in-out;
 }
 
+/* Brand Logo & Title */
 .navbar-brand {
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 600;
   color: #007bff !important;
 }
 
 .navbar-brand img {
-  height: 40px;
-  margin-right: 10px;
+  height: 45px;
+  margin-right: 8px;
 }
 
+/* Navbar Links */
 .navbar-nav .nav-link {
   font-size: 1.1rem;
   font-weight: 500;
-  color: #343a40 !important;
-  transition: color 0.3s ease;
+  color: #333 !important;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+  border-radius: 5px;
 }
 
 .navbar-nav .nav-link:hover {
+  background: rgba(0, 123, 255, 0.1);
   color: #007bff !important;
 }
 
+/* Toggler Icon */
 .navbar-toggler {
   border: none;
 }
@@ -37,31 +45,74 @@
   box-shadow: none;
 }
 
-/* Mobile Menu Styling */
+/* Profile Dropdown */
+.dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 10px;
+}
+
+.dropdown-menu .dropdown-item {
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
+  padding: 8px 16px;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+  border-radius: 5px;
+}
+
+/* Profile Image */
+.dropdown-toggle {
+  border: none;
+}
+
+.dropdown-toggle img {
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-toggle:hover img {
+  transform: scale(1.1);
+}
+
+/* Login/Signup Buttons */
+.navbar .nav-link.text-primary,
+.navbar .nav-link.text-danger {
+  font-weight: 600;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+}
+
+.navbar .nav-link.text-primary:hover {
+  color: #0056b3 !important;
+}
+
+.navbar .nav-link.text-danger:hover {
+  color: #b30000 !important;
+}
+
+/* Responsive Design */
 @media (max-width: 992px) {
   .navbar-nav {
     text-align: center;
   }
 
   .navbar-nav .nav-item {
-    margin: 10px 0;
+    margin: 8px 0;
   }
 
   .navbar-nav .nav-link {
     font-size: 1.2rem;
   }
-}
 
-/* Login/Signup Button Styling */
-.navbar .nav-link.text-primary {
-  font-weight: 600;
-}
-
-.navbar .nav-link.text-danger {
-  font-weight: 600;
-  color: #dc3545 !important;
-}
-
-.navbar .nav-link.text-danger:hover {
-  color: #bd2130 !important;
+  .dropdown-toggle img {
+    height: 35px;
+  }
 }

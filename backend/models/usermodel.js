@@ -28,6 +28,11 @@ const schema = new mongoose.Schema({
         state: { type: String, required: true },
         zip: { type: String, required: true },
     },
+    location: {
+        type: { type: String, enum: ['Point'], default: 'Point' },
+        coordinates: { type: [Number], required: true }, // [longitude, latitude]
+    },
+    
     password: {
         type: String,
         required: true

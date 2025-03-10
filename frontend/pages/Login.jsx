@@ -1,19 +1,22 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../src/store/Auth";
-import "./login.css";
+import { motion } from "framer-motion";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { FaLock, FaPaperPlane } from 'react-icons/fa';
+import './login.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { storeToken, storeUserType } = useContext(AuthContext);
+  const { storeToken, storeUserDetails } = useContext(AuthContext);
   const [user, setUser] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false); // Loader state
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Show loader
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/login", {
@@ -22,60 +25,105 @@ const Login = () => {
         body: JSON.stringify(user),
       });
 
-      const data = await response.json();
-      console.log("API Response:", data);
-
-      if (response.ok) {
-        toast.success("Login successful! Redirecting...");
-        storeToken(data.token);
-        storeUserType(data.userType);
-        localStorage.setItem("username", data.username);
-        setTimeout(() => navigate("/dashboard"), 1000);
-      } else {
-        toast.error(data.msg || "Invalid credentials");
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData?.msg || "Invalid credentials");
+        return;
       }
+
+      const data = await response.json();
+      toast.success("Login successful! Redirecting...");
+      storeToken(data.token);
+      storeUserDetails(data.userType, data.username);
+
+      setTimeout(() => navigate("/dashboard"), 1000);
     } catch (error) {
       console.error("Login Error:", error);
-      toast.error("Error occurred during login");
+      toast.error("An error occurred during login. Please try again.");
     } finally {
-      setLoading(false); // Hide loader after request completes
+      setLoading(false);
     }
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
   return (
-    <div className="section-login">
-      <div className="login-container">
-        <div className="login-form">
-          <h1 className="heading">Login</h1>
-          <form className="login-user-form" onSubmit={handleSubmit}>
-            <div className="login-form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                required
-              />
-            </div>
-            <div className="login-form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-                required
-              />
-            </div>
-            <button type="submit" disabled={loading}>
-              {loading ? <div className="spinner"></div> : "Login"}
-            </button>
-          </form>
+    <div className="container py-5 d-flex justify-content-center align-items-center min-vh-100">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="card shadow-sm p-4 border-0 login-card"
+      >
+        <div className="text-center mb-4">
+          <FaLock className="text-primary mb-3" size={40} />
+          <h1 className="display-5 fw-bold text-dark">Login</h1>
+          <p className="text-muted">Sign in to access your FoodShare account</p>
         </div>
-      </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label fw-bold text-dark">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              required
+              className="form-control"
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="password" className="form-label fw-bold text-dark">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              required
+              className="form-control"
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <motion.button
+            type="submit"
+            className="btn btn-warning btn-md w-100 d-flex align-items-center justify-content-center"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="spinner-border spinner-border-sm me-2" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            ) : (
+              <FaPaperPlane className="me-2" />
+            )}
+            {loading ? "Logging in..." : "Login"}
+          </motion.button>
+
+          <p className="text-center mt-3 text-muted">
+            Don’t have an account?{' '}
+            <NavLink className="text-primary text-decoration-none fw-bold" to="/signup">
+              Signup
+            </NavLink>
+          </p>
+        </form>
+      </motion.div>
     </div>
   );
 };

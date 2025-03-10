@@ -1,36 +1,56 @@
-// using express
-const express=require("express")
-const app=express()
+const express = require("express");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+const cors = require("cors");
+const connectDb = require("./utility/db");
 
-// using cross platform for better communication between frontend and backend
+const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+    cors: { origin: "*" }
+});
 
-const cors=require('cors')
+const authrouter = require("./router/auth-router");
+const contactrouter = require("./router/contact-router");
+const foodrouter = require("./router/food-router"); // Pass io
 
-// using routers for routing 
+const errorMiddleware = require("./middleware/error-middleware");
 
-const authrouter=require('./router/auth-router')
-const contactrouter=require('./router/contact-router')
-const foodrouter=require('./router/food-router')
-const ngorouter=require('./router/ngo-router');
-
-// connting to data base and activating local host 
-const connectDb=require('./utility/db')
-port=5000
-connectDb().then(()=>{
-    app.listen(port,()=>{console.log("started")});
-
-})
-
-// middlewares
-const errorMiddleware = require("./middleware/error-middleware")
-app.use(express.json())
+app.use(express.json());
+app.use(cors());
 app.use(errorMiddleware);
-app.use(cors())
+
+// Use routers
+app.use("/api/auth", authrouter);
+app.use("/api/form", contactrouter);
+app.use("/api/food", foodrouter);
 
 
-// using routers for different paths
-app.use('/api/auth',authrouter);
-app.use('/api/form',contactrouter);
-app.use('/api/food',foodrouter)
-app.use('/api/ngo',ngorouter)
+const users = {}; // Store connected users
+const ngorouter = require("./router/ngo-router")(io,users);
+app.use("/api/ngo", ngorouter);
+io.on("connection", (socket) => {
+    console.log("A user connected:", socket.id);
 
+    // Register user (NGO or Institute)
+    socket.on("register", ({ userId, userType }) => {
+        users[userId] = { socketId: socket.id, userType };
+        console.log("User registered:", users);
+    });
+
+    // Handle disconnections
+    socket.on("disconnect", () => {
+        console.log("A user disconnected:", socket.id);
+        Object.keys(users).forEach((key) => {
+            if (users[key].socketId === socket.id) {
+                delete users[key]; // Remove user on disconnect
+            }
+        });
+    });
+});
+
+connectDb().then(() => {
+    server.listen(5000, () => {
+        console.log("Server running on port 5000");
+    });
+});

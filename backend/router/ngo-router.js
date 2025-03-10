@@ -1,7 +1,11 @@
-const express = require('express')
-const router= express.Router()
-const ngocontollers=require('../controllers/ngo-controller')
-   
-router.get('/food-avaiblity',ngocontollers.Foodlistings)
-router.post('/booking', ngocontollers.Bookings)
-module.exports= router;
+const express = require('express');
+const router = express.Router();
+const ngocontrollers = require('../controllers/ngo-controller');
+const { getInstituteRequests } = require("../controllers/BookingController");
+
+module.exports = (io,users) => {
+    router.get('/food-availability', ngocontrollers.Foodlistings);
+    router.post('/book-food', (req, res) => ngocontrollers.bookFood(req, res, io,users));
+    router.get("/requests", getInstituteRequests);
+    return router;
+};

@@ -53,7 +53,7 @@ const History = () => {
                                     {meal.food_items.map((item, idx) => (
                                         <li key={idx}>
                                             <span className="food-name">{item.food_name}</span>
-                                            <span className="quantity">{item.quantity} kg</span>
+                                            <span className="quantity">{item.quantity} Plates</span>
                                         </li>
                                     ))}
                                 </ul>

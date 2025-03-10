@@ -1,33 +1,43 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => { 
-    const [token, setToken] = useState(localStorage.getItem('token'));
-    const [userType,setuserType]=useState(localStorage.getItem('userType'));
+export const AuthProvider = ({ children }) => {
+    const [token, setToken] = useState(localStorage.getItem('token') || "");
+    const [userType, setUserType] = useState(localStorage.getItem('userType') || "");
+    const [username, setUsername] = useState(localStorage.getItem('username') || "");
+    
     let isLoggedIn = !!token;
+
+    useEffect(() => {
+        setToken(localStorage.getItem('token') || "");
+        setUserType(localStorage.getItem('userType') || "");
+        setUsername(localStorage.getItem('username') || "");
+    }, []);
+
     const storeToken = (serverToken) => {
-        localStorage.setItem('token', serverToken);  // Store token in localStorage
-        setToken(serverToken);                       // Update state with new token
+        localStorage.setItem('token', serverToken);  
+        setToken(serverToken);                       
+    };
+
+    const storeUserDetails = (userType, username) => {
+        localStorage.setItem('userType', userType);
+        localStorage.setItem('username', username);
+        setUserType(userType);
+        setUsername(username);
     };
 
     const LogoutUser = () => {
-        setToken("");  // Clear the token state
+        setToken("");  
+        setUserType("");
+        setUsername("");
         localStorage.removeItem('token');
         localStorage.removeItem('userType'); 
         localStorage.removeItem('username');
-        setuserType("");
-       // Remove token from localStorage
     };
-    const storeUserType=(userType)=>{
-        localStorage.setItem('userType', userType);
-        setToken(userType);
-    }
 
-   
-    
     return (
-        <AuthContext.Provider value={{ isLoggedIn, storeToken, LogoutUser,storeUserType }}>
+        <AuthContext.Provider value={{ isLoggedIn, token, userType, username, storeToken, storeUserDetails, LogoutUser }}>
             {children}
         </AuthContext.Provider>
     );

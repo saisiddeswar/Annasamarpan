@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../src/store/Auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
@@ -7,8 +7,7 @@ import './styles/Navbar.css';
 
 const Navbar = () => {
   const { isLoggedIn, LogoutUser } = useContext(AuthContext);
-
-  console.log('isLoggedIn:', isLoggedIn); // Debug log
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -16,7 +15,7 @@ const Navbar = () => {
         {/* Logo and Brand */}
         <NavLink className="navbar-brand d-flex align-items-center" to="/">
           <img
-            src="/AnnaSamarpan-removebg-preview.png" // Updated image path
+            src="/AnnaSamarpan-removebg-preview.png"
             alt="Logo"
             className="logo img-fluid me-2"
             style={{ height: '40px' }}
@@ -49,37 +48,33 @@ const Navbar = () => {
             <li className="nav-item">
               <NavLink className="nav-link" to="/contact">Contact</NavLink>
             </li>
-            {isLoggedIn && (
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/dashboard">Dashboard</NavLink>
-              </li>
-            )}
-            {/* Login / Signup Section inside menu */}
-            <li className="nav-item d-lg-none">
-              {isLoggedIn ? (
-                <NavLink className="nav-link text-danger" to="/logout" onClick={LogoutUser}>
-                  Logout
-                </NavLink>
-              ) : (
-                <>
-                  <NavLink className="nav-link text-primary" to="/login">
-                    Login
-                  </NavLink>
-                  <NavLink className="nav-link text-primary" to="/signup">
-                    Signup
-                  </NavLink>
-                </>
-              )}
-            </li>
           </ul>
         </div>
 
-        {/* Desktop Login / Signup Section */}
-        <div className="d-none d-lg-flex align-items-center gap-3">
+        {/* Profile Dropdown */}
+        <div className="d-flex align-items-center">
           {isLoggedIn ? (
-            <NavLink className="nav-link text-danger" to="/logout" onClick={LogoutUser}>
-              Logout
-            </NavLink>
+            <div className="dropdown">
+              <img
+                src="../public/profile-user.png" // Replace with user profile picture if available
+                alt="Profile"
+                className="rounded-circle dropdown-toggle"
+                style={{ height: '40px', cursor: 'pointer' }}
+                id="profileDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              />
+              <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                <li>
+                  <NavLink className="dropdown-item" to="/dashboard">Dashboard</NavLink>
+                </li>
+                <li>
+                  <NavLink className="dropdown-item text-danger" to="/logout" onClick={LogoutUser}>
+                    Logout
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
           ) : (
             <>
               <NavLink className="nav-link text-primary" to="/login">

@@ -11,7 +11,7 @@ const foodItemSchema = new mongoose.Schema({
         required: true,
         min: 1 // Ensures quantity is at least 1
     },
-    Availbility:{
+    availability:{
         type: String,
         enum:['YES', 'NO',],
         default: 'YES'

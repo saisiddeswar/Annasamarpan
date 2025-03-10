@@ -17,19 +17,20 @@ const home = async (req, res) => {
 // Register Route
 const register = async (req, res) => {
   try {
-    const { userType, username, email, phone, address, password } = req.body;
+    const { userType, username, email, phone, address, password, latitude, longitude } = req.body;
 
-    // Check if user already exists
-    const userExist = await User.findOne({ email }); 
+    if (!latitude || !longitude) {
+      return res.status(400).json({ msg: "Location coordinates are required" });
+    }
+
+    const userExist = await User.findOne({ email });
     if (userExist) {
       console.log(`User with email ${email} already exists`);
       return res.status(400).json({ msg: "User already exists" });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user in DB
     const user = await User.create({
       userType,
       username,
@@ -37,14 +38,10 @@ const register = async (req, res) => {
       phone,
       address,
       password: hashedPassword,
+      location: { type: "Point", coordinates: [longitude, latitude] }, // GeoJSON format
     });
 
-    // Generate JWT token
-    const token = jwt.sign(
-      { userId: user._id, userType: user.userType },
-      process.env.JWT_SECRET || 'your_secret_key', // Use environment variable for security
-      { expiresIn: '1h' }
-    );
+    const token = jwt.sign({ userId: user._id, userType: user.userType }, process.env.JWT_SECRET || 'your_secret_key', { expiresIn: '1h' });
 
     console.log("User registered successfully");
 
