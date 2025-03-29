@@ -72,7 +72,7 @@ const Navbar = () => {
             {isLoggedIn ? (
               <div className="dropdown">
                 <img
-                  src="../public/profile-user.png" // Replace with dynamic user image if available
+                  src="/profile-user.png" // Replace with dynamic user image if available
                   alt="Profile"
                   className="rounded-circle dropdown-toggle profile-img"
                   style={{ height: "40px", width: "40px", cursor: "pointer" }}
