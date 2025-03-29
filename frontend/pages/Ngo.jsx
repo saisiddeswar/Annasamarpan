@@ -15,9 +15,12 @@ const Ngo = () => {
   useEffect(() => {
     const fetchInstitutes = async () => {
       try {
-        const response = await fetch("https://annasamarpan-backend.onrender.com/api/ngo/food-availability");
-        if (!response.ok) throw new Error("Network response was not ok");
+        const response = await fetch(
+          "https://annasamarpan-backend.onrender.com/api/ngo/food-availability"
+        );
+        if (!response.ok) throw new Error("Failed to fetch data");
         const data = await response.json();
+        console.log("Fetched Data:", data); // Debugging
         setInstitutes(data.availableFood);
       } catch (error) {
         console.error("Error fetching institutes:", error);
@@ -31,21 +34,27 @@ const Ngo = () => {
       socket.emit("register", { userId: username, userType: "ngo" });
 
       socket.on("newBookingRequest", (data) => {
+        console.log("Socket Event Received:", data);
         if (data.accepted) {
-          setInstitutes((prevInstitutes) => {
-            const newInstitutes = prevInstitutes.map((institute) => {
-              if (institute.instituteUsername === data.instituteUsername) {
-                const updatedMeals = institute.meals.map((meal) =>
-                  meal.type === data.mealType
-                    ? { ...meal, items: meal.items.filter((item) => item.food_name !== data.foodItem.food_name) }
-                    : meal
-                );
-                return { ...institute, meals: updatedMeals };
-              }
-              return institute;
-            });
-            return newInstitutes;
-          });
+          setInstitutes((prevInstitutes) =>
+            prevInstitutes.map((institute) =>
+              institute.instituteUsername === data.instituteUsername
+                ? {
+                    ...institute,
+                    meals: institute.meals.map((meal) =>
+                      meal.type === data.mealType
+                        ? {
+                            ...meal,
+                            items: meal.items.filter(
+                              (item) => item.food_name !== data.foodItem.food_name
+                            ),
+                          }
+                        : meal
+                    ),
+                  }
+                : institute
+            )
+          );
         }
         alert(`Institute ${data.instituteUsername} responded: ${data.message}`);
       });
@@ -59,61 +68,71 @@ const Ngo = () => {
 
   const handleBook = async (instituteUsername, mealType, foodItem) => {
     try {
-      const response = await fetch("http://localhost:5000/api/ngo/book-food", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          instituteUsername,
-          mealType,
-          foodItems: foodItem.food_name,
-          ngoUsername: username,
-        }),
-      });
-  
+      console.log("Booking Food:", { instituteUsername, mealType, foodItem });
+
+      const response = await fetch(
+        "https://annasamarpan-backend.onrender.com/api/ngo/book-food",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            instituteUsername,
+            mealType,
+            foodItems: foodItem.food_name,
+            ngoUsername: username,
+          }),
+        }
+      );
+
       const result = await response.json();
+      console.log("API Response:", result);
+
       if (!response.ok) {
-        console.error(result.message);
+        console.error("Booking failed:", result.message);
         return;
       }
-  
-      // Add the item to the cart
+
       setCart((prevCart) => [
         ...prevCart,
-        { ...foodItem, instituteUsername, mealType, bookedAt: Date.now() }, // Add a timestamp for tracking
+        { ...foodItem, instituteUsername, mealType, bookedAt: Date.now() },
       ]);
-  
-      // Remove the item from the list temporarily
-      setInstitutes((prevInstitutes) => {
-        const newInstitutes = prevInstitutes.map((institute) => {
-          if (institute.instituteUsername === instituteUsername) {
-            const updatedMeals = institute.meals.map((meal) =>
-              meal.type === mealType
-                ? { ...meal, items: meal.items.filter((item) => item.food_name !== foodItem.food_name) }
-                : meal
-            );
-            return { ...institute, meals: updatedMeals };
-          }
-          return institute;
-        });
-        return newInstitutes;
-      });
-  
-      // Re-add the item after 30 minutes
+
+      setInstitutes((prevInstitutes) =>
+        prevInstitutes.map((institute) =>
+          institute.instituteUsername === instituteUsername
+            ? {
+                ...institute,
+                meals: institute.meals.map((meal) =>
+                  meal.type === mealType
+                    ? {
+                        ...meal,
+                        items: meal.items.filter(
+                          (item) => item.food_name !== foodItem.food_name
+                        ),
+                      }
+                    : meal
+                ),
+              }
+            : institute
+        )
+      );
+
       setTimeout(() => {
-        setInstitutes((prevInstitutes) => {
-          const newInstitutes = prevInstitutes.map((institute) => {
-            if (institute.instituteUsername === instituteUsername) {
-              const updatedMeals = institute.meals.map((meal) =>
-                meal.type === mealType ? { ...meal, items: [...meal.items, foodItem] } : meal
-              );
-              return { ...institute, meals: updatedMeals };
-            }
-            return institute;
-          });
-          return newInstitutes;
-        });
-  
-        // Remove the item from the cart after 30 minutes
+        setInstitutes((prevInstitutes) =>
+          prevInstitutes.map((institute) =>
+            institute.instituteUsername === instituteUsername
+              ? {
+                  ...institute,
+                  meals: institute.meals.map((meal) =>
+                    meal.type === mealType
+                      ? { ...meal, items: [...meal.items, foodItem] }
+                      : meal
+                  ),
+                }
+              : institute
+          )
+        );
+
         setCart((prevCart) =>
           prevCart.filter(
             (cartItem) =>
@@ -124,19 +143,13 @@ const Ngo = () => {
               )
           )
         );
-      }, 30 * 60 * 1000); // 30 minutes
+      }, 30 * 60 * 1000);
     } catch (error) {
       console.error("Error booking food:", error);
     }
   };
-  
 
   const toggleCart = () => setShowCart(!showCart);
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
 
   return (
     <div className="container py-5">
@@ -188,13 +201,15 @@ const Ngo = () => {
         {institutes.map((institute, index) => (
           <motion.div
             key={index}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             className="col-md-4"
           >
             <div className="card shadow-sm p-4 border-0 h-100">
-              <h3 className="fw-bold text-dark mb-3">{institute.instituteUsername.toUpperCase()}</h3>
+              <h3 className="fw-bold text-dark mb-3">
+                {institute.instituteUsername.toUpperCase()}
+              </h3>
               {institute.meals.map((meal, mealIndex) => (
                 <div key={mealIndex} className="mb-3">
                   <h4 className="text-primary mb-2">
@@ -214,7 +229,9 @@ const Ngo = () => {
                           </div>
                           <motion.button
                             className="btn btn-success btn-sm"
-                            onClick={() => handleBook(institute.instituteUsername, meal.type, item)}
+                            onClick={() =>
+                              handleBook(institute.instituteUsername, meal.type, item)
+                            }
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                           >
