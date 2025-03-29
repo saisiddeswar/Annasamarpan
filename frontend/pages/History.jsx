@@ -11,7 +11,7 @@ const History = () => {
         const fetchHistory = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`https://anna-samarpan.vercel.app/api/food/history?username=${username}`, {
+                const response = await fetch(`https://annasamarpan-backend.onrender.com/api/food/history?username=${username}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
