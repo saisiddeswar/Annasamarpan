@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaUsers, FaUtensils, FaHandshake } from "react-icons/fa";
 import "./about.css";
+import OurJourney from "./OurJourney";
+
 
 const About = () => {
   const [visitors, setVisitors] = useState(0);
@@ -57,7 +59,8 @@ const About = () => {
           animate="visible"
           className="text-center mb-5"
         >
-          <h1 className="about-title fw-bold text-dark">About FoodShare Network</h1>
+          <h1 className="about-title fw-bold text-dark">About
+            <span className="text-success"> FoodShare Network</span> </h1>
           <p className="about-description text-muted mx-auto">
             At FoodShare Network, we believe in the power of community and sustainability.
             Our mission is to connect educational institutions with NGOs to redistribute surplus food,
@@ -127,6 +130,7 @@ const About = () => {
           </p>
         </motion.div>
       </div>
+    <OurJourney/>
     </div>
   );
 };

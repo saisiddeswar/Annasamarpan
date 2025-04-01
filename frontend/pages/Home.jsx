@@ -8,6 +8,7 @@ import CTASection from './CTASection';
 import FooterSection from './FooterSection';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './home.css';
+import CollaboratingNGOs from './CollaboratingNGOs';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Home = () => {
       <WhatWeDoPage />
       <TestimonialsSection />
       <CTASection navigate={navigate} />
+      <CollaboratingNGOs/>
     </div>
   );
 };
